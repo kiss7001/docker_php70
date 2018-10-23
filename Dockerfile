@@ -7,7 +7,10 @@ RUN apt-get install -y nginx php7.0 php7.0-fpm php7.0-cli php7.0-common php7.0-m
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/lib/nginx
 
-VOLUME ["/data", "/etc/nginx/site-enabled", "/var/log/nginx"]
+ADD nginx/sites-available/default /etc/nginx/sites-available/default
+RUN service php7.0-fpm start
+
+VOLUME ["/var/www/html", "/data", "/etc/nginx/sites-enabled", "/var/log/nginx"]
 
 WORKDIR /etc/nginx
 
