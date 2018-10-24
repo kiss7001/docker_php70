@@ -12,8 +12,7 @@ ADD nginx/sites-available/default /etc/nginx/sites-available/default
 VOLUME ["/var/www/html", "/data", "/etc/nginx/sites-enabled", "/var/log/nginx"]
 
 WORKDIR /etc/nginx
-RUN service php7.0-fpm start
 
-CMD service php7.0-fpm start && nginx -g "daemon off;"
+CMD service php7.0-fpm start && service nginx start && /usr/sbin/php-fpm7.0 -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,"$,,' 1>&1
 
 EXPOSE 80
