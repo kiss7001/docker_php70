@@ -8,12 +8,12 @@ RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/lib/nginx
 
 ADD nginx/sites-available/default /etc/nginx/sites-available/default
-RUN service php7.0-fpm start
 
 VOLUME ["/var/www/html", "/data", "/etc/nginx/sites-enabled", "/var/log/nginx"]
 
 WORKDIR /etc/nginx
+RUN service php7.0-fpm start
 
-CMD ["nginx"]
+CMD service php7.0-fpm start && nginx -g "daemon off;"
 
 EXPOSE 80
